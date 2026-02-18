@@ -1,1 +1,58 @@
+# Build Directories
+build/
+bin/
+lib/
+out/
+debug/
+release/
+x64/
+x86/
+cmake-build-debug/
+cmake-build-release/
 
+# Temporary Files
+*.log
+*.tmp
+*.bak
+*.swp
+*~
+*.idb
+*.pdb
+*.ilk
+*.exp
+*.obj
+*.o
+*.tlog
+*.iobj
+*.ipdb
+*.cdf
+
+# Python / vLLM
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+.env
+
+# IDE / Editor
+.vscode/
+.idea/
+*.sln
+*.vcxproj
+*.vcxproj.user
+*.vcxproj.filters
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Artifacts
+*.exe
+*.dll
+*.lib
+*.so
+*.dylib
+readiness_report.json
