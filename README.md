@@ -1,3 +1,9 @@
+<div align="center">
+  <h3>Project Views</h3>
+  <img src="https://komarev.com/ghpvc/?username=RishiM1408-synapse-vm&label=Project%20Views&color=0e75b6&style=flat" alt="Project Views" />
+</div>
+
+
 # SynapseVM: Distributed Saliency-Aware KV-Cache Management
 
 > **"Infinite context requires more than more memory; it requires smarter memory."**
