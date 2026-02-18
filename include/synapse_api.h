@@ -38,4 +38,26 @@ extern "C" {
     // block_ids: Array of block IDs
     // scores: Array of attention sums per block
     SYNAPSE_API void synapse_update_saliency(const uint64_t* block_ids, const float* scores, size_t num_blocks);
+    
+    // ==========================================
+    // Telemetry Interface (For SRE/Prometheus)
+    // ==========================================
+    
+    typedef struct {
+        uint64_t total_requests;
+        uint64_t l1_hits;
+        uint64_t l2_hits;
+        uint64_t l3_misses; // Disk/Cold miss
+        double current_quantization_error; // MSE
+        double avg_migration_latency_us;
+    } SynapseTelemetry;
+
+    // Fills the provided struct with current snapshot metrics
+    SYNAPSE_API void synapse_get_telemetry(SynapseTelemetry* metrics);
+    
+    // Resets internal counters (e.g., for start of new test phase)
+    SYNAPSE_API void synapse_reset_telemetry();
+    
+    // Security Audit
+    SYNAPSE_API bool synapse_check_access(uint64_t block_id, const char* tenant_id);
 }

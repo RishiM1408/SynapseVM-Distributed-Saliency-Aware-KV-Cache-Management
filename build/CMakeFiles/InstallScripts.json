@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"E:/SynapseVM-Distributed-Saliency-Aware-KV-Cache-Management/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

@@ -23,6 +23,9 @@ struct BlockMetadata {
     size_t size_bytes;
     bool is_quantized;
     float saliency_score;
+    
+    // [SECURITY] Multi-Tenant Isolation
+    std::string tenant_id;
 };
 
 class SlabAllocator {
@@ -35,17 +38,19 @@ public:
     SlabAllocator& operator=(const SlabAllocator&) = delete;
 
     // Allocate a block in the specified tier
-    uint64_t allocate(size_t size, MemoryTier tier = MemoryTier::HBM_HOT);
-
-    // Free a block
-    void free(uint64_t block_id);
-
+    // Memory Management
+    uint64_t allocate(size_t size, MemoryTier tier, const std::string& tenant_id);
+    void free(uint64_t block_id, const std::string& tenant_id);
     // Move a block between tiers (e.g., Evict HBM -> Host, Prefetch Host -> HBM)
     // Synchronous for now, will be async with streams later.
     void migrate(uint64_t block_id, MemoryTier target_tier, cudaStream_t stream = 0);
-
-    // Get metadata for a block
-    BlockMetadata get_metadata(uint64_t block_id);
+    
+    // Security Access Check
+    bool check_access(uint64_t block_id, const std::string& tenant_id);
+    
+    // Metadata Access
+    BlockMetadata get_metadata(uint64_t block_id) const;
+    MemoryTier get_tier(uint64_t block_id) const; // Added for Introspection
 
 private:
     size_t hbm_pool_size_;

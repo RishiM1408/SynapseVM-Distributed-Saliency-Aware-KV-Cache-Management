@@ -1,0 +1,13 @@
+{
+  "project": "SynapseVM",
+  "version": "1.0.0-PROD_READY",
+  "hardware": "RTX 4070 / Ryzen 7 7745HX",
+  "benchmarks": {
+    "resiliency": {
+      "backpressure_success_rate": 0.0,
+      "isolation_verification": "UNKNOWN",
+      "status": "RISK"
+    }
+  },
+  "overall_grade": "BRONZE"
+}

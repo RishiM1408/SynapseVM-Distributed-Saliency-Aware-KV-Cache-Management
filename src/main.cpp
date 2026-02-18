@@ -13,7 +13,7 @@ int main() {
         std::cout << "[Success] SlabAllocator initialized." << std::endl;
 
         // Allocate a small block
-        uint64_t block_id = allocator.allocate(2 * 1024 * 1024, synapse::memory::MemoryTier::HBM_HOT);
+        uint64_t block_id = allocator.allocate(2 * 1024 * 1024, synapse::memory::MemoryTier::HBM_HOT, "default");
         std::cout << "[Success] Allocated Block ID: " << block_id << " in HBM." << std::endl;
 
     } catch (const std::exception& e) {

@@ -14,7 +14,7 @@ int main() {
     synapse::engine::VMManager vm(HBM_SIZE, HOST_SIZE);
     
     // 1. Insert "Needle" (High Saliency Block)
-    uint64_t needle_block = vm.allocate_kv_block();
+    uint64_t needle_block = vm.allocate_kv_block("test");
     std::cout << "[Step 1] Allocated Needle Block ID: " << needle_block << std::endl;
     
     // Simulate high attention on Needle
@@ -36,7 +36,7 @@ int main() {
     std::cout << "[Step 2] Filling Haystack (" << blocks_to_fill << " blocks)..." << std::endl;
     for(int i=0; i<blocks_to_fill; ++i) {
         try {
-            uint64_t id = vm.allocate_kv_block();
+            uint64_t id = vm.allocate_kv_block("test");
             haystack.push_back(id);
             if (i % 100 == 0) std::cout << "." << std::flush;
         } catch(...) {

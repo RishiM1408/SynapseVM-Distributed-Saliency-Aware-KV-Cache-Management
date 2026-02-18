@@ -22,13 +22,51 @@ VMManager::~VMManager() {
     cudaStreamDestroy(memory_stream_);
 }
 
-uint64_t VMManager::allocate_kv_block() {
+// Telemetry Implementation
+SynapseTelemetry VMManager::get_metrics() const {
+    SynapseTelemetry m;
+    m.total_requests = total_reqs_.load();
+    m.l1_hits = l1_hits_.load();
+    m.l2_hits = l2_hits_.load();
+    m.l3_misses = l3_misses_.load();
+    m.current_quantization_error = current_quant_error_.load();
+    m.avg_migration_latency_us = avg_migration_latency_.load();
+    return m;
+}
+
+void VMManager::reset_metrics() {
+    total_reqs_ = 0;
+    l1_hits_ = 0;
+    l2_hits_ = 0;
+    l3_misses_ = 0;
+    current_quant_error_ = 0.0;
+    avg_migration_latency_ = 0.0;
+    migration_count_ = 0;
+}
+
+// Introspection for NIAH & Security
+synapse::memory::MemoryTier VMManager::get_block_tier(uint64_t block_id) const {
+    return allocator_->get_tier(block_id); 
+}
+
+// Security: Tenant Access Check
+bool VMManager::check_access(uint64_t block_id, const std::string& tenant_id) {
+    bool allowed = allocator_->check_access(block_id, tenant_id);
+    if (!allowed) {
+        // [SECURITY TELEMETRY] Log violation
+        // In real system: telemetry_logger->log_violation(tenant_id, block_id, ip_addr);
+        std::cerr << "[VMManager] Security Violation: Tenant " << tenant_id << " denied access to Block " << block_id << std::endl;
+    }
+    return allowed;
+}
+
+uint64_t VMManager::allocate_kv_block(const std::string& tenant_id) {
     // Try allocating in HBM
     try {
-        return allocator_->allocate(2 * 1024 * 1024, memory::MemoryTier::HBM_HOT);
+        return allocator_->allocate(2 * 1024 * 1024, memory::MemoryTier::HBM_HOT, tenant_id);
     } catch (...) {
         // HBM Failure -> Evict then allocate, or allocate in Host directly
-        return allocator_->allocate(2 * 1024 * 1024, memory::MemoryTier::HOST_WARM);
+        return allocator_->allocate(2 * 1024 * 1024, memory::MemoryTier::HOST_WARM, tenant_id);
     }
 }
 
@@ -38,14 +76,14 @@ void VMManager::step() {
     
     // 2. Decide eviction based on capacity
     // For prototype, we check eviction candidates
-    auto candidates = scorer_->get_least_salient_blocks(10);
+    auto candidates = scorer_->identify_eviction_candidates(10);
     
     for (auto block_id : candidates) {
         // Eviction Logic
         // In a real loop, we would check if HBM is full.
         // Here we demonstrate the Overlap Mechanism:
         
-        BlockMetadata meta = allocator_->get_metadata(block_id);
+        memory::BlockMetadata meta = allocator_->get_metadata(block_id);
         
         if (meta.current_tier == memory::MemoryTier::HBM_HOT) {
             // Async Eviction on Memory Stream

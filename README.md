@@ -96,6 +96,32 @@ This repository and its contents, including all architectural documentation, sou
 
 **Terms of Use:**
 
+- **Automated Benchmarking**:
+  - Run `benchmark_oneshot.ps1` to build the container and execute the NIAH verification in one step.
+
+---
+
+## 🛡️ Operational Readiness
+
+We provide a **Readiness Report Suite** (`tests/readiness_report.py`) that audits the system for production deployment.
+
+### 1. The "Memory Tsunami" (OOM Stability)
+
+- **Test**: Floods the engine with 50+ concurrent requests.
+- **Pass**: System triggers `STATUS_BACKPRESSURE` instead of crashing when L2 is exhausted.
+
+### 2. The "Precision Decay" Audit
+
+- **Metric**: Root Mean Square Error (RMSE) between FP16 and INT4.
+- **Threshold**: RMSE < 0.012 (Standard for 4-bit quantization).
+
+### 3. The "Stutter-Free" P99 Audit
+
+- **Metric**: Latency during massive L1<->L2 migration.
+- **Threshold**: Masking Efficiency > 95% (Transfer time hidden by Compute).
+
+---
+
 - **Viewing & Education:** You are permitted to view the source code for educational and peer-review purposes.
 - **No Redistribution:** You may not redistribute, sub-license, or publicly share the code or its derivatives.
 - **No Commercial Use:** Any use of this software in a commercial environment or for financial gain is strictly prohibited.

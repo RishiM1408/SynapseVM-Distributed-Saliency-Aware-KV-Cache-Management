@@ -31,7 +31,7 @@ uint64_t synapse_allocate(size_t size_bytes, int tier) {
     
     // TODO: VMManager::allocate_kv_block signature update needed to support variable sizes 
     // or we assume vLLM block size matches our Slab size (2MB).
-    return g_vm_manager->allocate_kv_block();
+    return g_vm_manager->allocate_kv_block("vllm");
 }
 
 void synapse_free(uint64_t block_id) {

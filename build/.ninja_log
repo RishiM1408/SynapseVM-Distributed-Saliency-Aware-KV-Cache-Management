@@ -1,0 +1,22 @@
+# ninja log v6
+26	911	7931225893386711	CMakeFiles/synapse_core.dir/src/engine/VMManager.cpp.obj	271cbd56755fe8de
+22	917	7931225893350712	CMakeFiles/synapse_core.dir/src/api.cpp.obj	cc34782c26fe67fd
+55	963	7931225893686773	CMakeFiles/synapse_demo.dir/src/main.cpp.obj	1bede0e7d23626c8
+70	1126	7931225893840018	CMakeFiles/audit_security.dir/tests/audit_security_cpp.cpp.obj	b9e8fa39de5b9836
+46	1131	7931225893594603	CMakeFiles/synapse_core.dir/src/main.cpp.obj	9140b16e75523f1d
+58	1134	7931225893716865	CMakeFiles/needle_test.dir/research/sim_needle_test.cpp.obj	f507687f997ac616
+61	1199	7931225893747938	CMakeFiles/synapse_vllm_adapter.dir/src/api.cpp.obj	13ee1a128dba070
+52	1228	7931225893651099	CMakeFiles/synapse_core.dir/src/scheduler/SaliencyScorer.cpp.obj	d695595fc68a7ee7
+64	1342	7931225893780990	CMakeFiles/audit_precision.dir/tests/audit_precision.cpp.obj	fc154cd25aa17371
+67	1712	7931225893807348	CMakeFiles/audit_latency.dir/tests/audit_latency.cpp.obj	2a995b2ae0559e8e
+49	1808	7931225893625957	CMakeFiles/synapse_core.dir/src/memory/SlabAllocator.cpp.obj	78c92c0ef7a728dd
+43	6297	7931225893568948	CMakeFiles/synapse_core.dir/src/kernels/saliency.cu.obj	a180f515dfb7f1f9
+28	7092	7931225893421723	CMakeFiles/synapse_core.dir/src/kernels/quantization.cu.obj	d929b8ae8cecc791
+7092	7186	7931225964058145	synapse_core.lib	c14dbc1da7f20b7c
+7208	7522	7931225965216327	audit_security.exe	c8d57cdfda6fec9b
+7198	7574	7931225965124398	audit_precision.exe	3d85a5529557ae26
+7190	7617	7931225965038516	needle_test.exe	c4a2ff235b773021
+7186	7636	7931225964997651	synapse_demo.exe	fd18d5fedd29f793
+7194	7647	7931225968923987	synapse_vllm_adapter.dll	8ec712757f6e1e9a
+7194	7647	7931225968923987	synapse_vllm_adapter.lib	8ec712757f6e1e9a
+7203	7660	7931225965170769	audit_latency.exe	2667a6df5e609d7d

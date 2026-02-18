@@ -1,0 +1,10 @@
+E:/SynapseVM-Distributed-Saliency-Aware-KV-Cache-Management/build/CMakeFiles/synapse_core.dir
+E:/SynapseVM-Distributed-Saliency-Aware-KV-Cache-Management/build/CMakeFiles/synapse_demo.dir
+E:/SynapseVM-Distributed-Saliency-Aware-KV-Cache-Management/build/CMakeFiles/needle_test.dir
+E:/SynapseVM-Distributed-Saliency-Aware-KV-Cache-Management/build/CMakeFiles/synapse_vllm_adapter.dir
+E:/SynapseVM-Distributed-Saliency-Aware-KV-Cache-Management/build/CMakeFiles/audit_precision.dir
+E:/SynapseVM-Distributed-Saliency-Aware-KV-Cache-Management/build/CMakeFiles/audit_latency.dir
+E:/SynapseVM-Distributed-Saliency-Aware-KV-Cache-Management/build/CMakeFiles/audit_security.dir
+E:/SynapseVM-Distributed-Saliency-Aware-KV-Cache-Management/build/CMakeFiles/test.dir
+E:/SynapseVM-Distributed-Saliency-Aware-KV-Cache-Management/build/CMakeFiles/edit_cache.dir
+E:/SynapseVM-Distributed-Saliency-Aware-KV-Cache-Management/build/CMakeFiles/rebuild_cache.dir

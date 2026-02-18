@@ -40,20 +40,26 @@ SYNAPSE_API void synapse_shutdown() {
     }
 }
 
+// Security: Check Access
+SYNAPSE_API bool synapse_check_access(uint64_t block_id, const char* tenant_id) {
+    if (!g_vm_manager) return false;
+    // std::string for C++ logic
+    return g_vm_manager->check_access(block_id, std::string(tenant_id));
+}
+
 SYNAPSE_API uint64_t synapse_allocate(size_t size_bytes, int tier) {
     // Thread-safe access to allocating logic
-    // Note: VMManager itself should be thread-safe. 
-    // Assuming VMManager uses internal mutexes for `allocate` (which SlabAllocator does).
-    // If VMManager is not fully thread-safe, we might need a lock here, 
-    // but SlabAllocator has `metadata_mutex_`.
-    
     if (!g_vm_manager) {
         std::cerr << "[SynapseVM] Error: Call to synapse_allocate before init." << std::endl;
         return 0; // 0 is invalid ID
     }
 
     try {
-        return g_vm_manager->allocate_kv_block();
+        // [SECURITY] Default Tenant for Legacy/Public Access
+        // In a real integration, the Python layer would pass the tenant check.
+        // For v1.0 compatibility, we use "default_tenant".
+        // Future: Update SYNAPSE_API to accept const char* tenant_id
+        return g_vm_manager->allocate_kv_block("default_tenant");
     } catch (const std::exception& e) {
          std::cerr << "[SynapseVM] Allocation Failed: " << e.what() << std::endl;
          return 0;
@@ -93,6 +99,23 @@ SYNAPSE_API void* synapse_get_ptr(uint64_t block_id) {
     if (!g_vm_manager) return nullptr;
     // Helper to get physical pointer for vLLM to use (if needed for debugging or direct memcpy fallback)
     return nullptr; 
+}
+
+// Telemetry Implementation
+SYNAPSE_API void synapse_get_telemetry(SynapseTelemetry* metrics) {
+    if (!g_vm_manager || !metrics) return;
+    try {
+        *metrics = g_vm_manager->get_metrics();
+    } catch (...) {
+        // Safe fallback
+        metrics->total_requests = 0;
+    }
+}
+
+SYNAPSE_API void synapse_reset_telemetry() {
+    if (g_vm_manager) {
+        g_vm_manager->reset_metrics();
+    }
 }
 
 } // extern "C"
