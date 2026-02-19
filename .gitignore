@@ -38,6 +38,7 @@ env/
 .env
 
 # IDE / Editor
+.vs/
 .vscode/
 .idea/
 *.sln
